@@ -1,6 +1,3 @@
-/*********************************/
-/* event.cpp */
-/*********************************/
 #include <stdio.h>
 #include "sys.h"
 #include "rtos_api.h"
