@@ -3,8 +3,8 @@
 #include "rtos_api.h"
 
 DeclareTask(Task1, 3);
-DeclareTask(Task2, 2);
-DeclareTask(Task3, 1);
+DeclareTask(Task2, 1);
+DeclareTask(Task3, 2);
 
 DeclareTask(Task4, 2);
 DeclareTask(Task5, 1);
@@ -59,7 +59,7 @@ TASK(Task3) {
 //2nd Example
 //Prior 2
 TASK(Task4) {
-    printf("Start Task6\n");
+    printf("Start Task5\n");
     GetResource(1);
     ActivateTask(Task5, Task5prior, "Task5");
     ReleaseResource(1);
@@ -76,7 +76,7 @@ TASK(Task5) {
 }
 
 //3rd Example
-//Prior 2
+//Prior 1
 int taskId;
 TASK(Task6) {
     printf("Start Task6\n");
@@ -89,7 +89,7 @@ TASK(Task6) {
     printf("Task6 Completed\n");
     TerminateTask();
 }
-//Prior 1
+//Prior 2
 TASK(Task7) {
     printf("Start Task7\n");
     SetSysEvent(Event_1);
@@ -98,6 +98,7 @@ TASK(Task7) {
 }
 
 //4th Example
+//prior 3
 TASK(Task8) {
     printf("Start Task8\n");
     taskId = RunningTask;
@@ -116,8 +117,6 @@ TASK(Task9) {
     printf("Start Task9\n");
     GetResource(1);
     ActivateTask(Task10, Task10prior, "Task10");
-    GetResource(2);
-    ReleaseResource(1);
     printf("Task9 Completed\n");
     TerminateTask();
 }
@@ -125,7 +124,6 @@ TASK(Task9) {
 TASK(Task10) {
     printf("Start Task10\n");
     GetResource(1);
-    GetResource(2);
     printf("Task10 Completed\n");
     TerminateTask();
 }
