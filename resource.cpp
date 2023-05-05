@@ -1,6 +1,3 @@
-/*************************************/
-/* resource.cpp */
-/*************************************/
 #include "sys.h"
 #include "rtos_api.h"
 #include <algorithm>
@@ -11,8 +8,8 @@ void InitPVS(TSemaphore S, std::string name) {
     ResourceQueue[S].block = 0;
 }
 
-void P(TSemaphore S) {
-    printf("P %s\n", ResourceQueue[S].name.c_str());
+void GetResource(TSemaphore S) {
+    printf("GetResource %s\n", ResourceQueue[S].name.c_str());
     while (ResourceQueue[S].block) { // ресурс заблокирован
         printf("Resource is blocked\n");
         TaskQueue[RunningTask].task_state = TASK_WAITING;
@@ -20,11 +17,11 @@ void P(TSemaphore S) {
         Dispatch();
     }
     ResourceQueue[S].block = 1;
-    printf("End of P %s\n", ResourceQueue[S].name.c_str());
+    printf("End of GetResource %s\n", ResourceQueue[S].name.c_str());
 }
 
-void V(TSemaphore S) {
-    printf("V %s\n", ResourceQueue[S].name.c_str());
+void ReleaseResource(TSemaphore S) {
+    printf("ReleaseResource %s\n", ResourceQueue[S].name.c_str());
     ResourceQueue[S].block = 0;
     for (auto &task : TaskQueue) {
         if (task.task_state == TASK_WAITING && task.waited_resource == S) {
@@ -33,5 +30,5 @@ void V(TSemaphore S) {
         }
     }
     Dispatch();
-    printf("End of V %s\n", ResourceQueue[S].name.c_str());
+    printf("End of ReleaseResource %s\n", ResourceQueue[S].name.c_str());
 }

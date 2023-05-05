@@ -20,9 +20,9 @@ void ShutdownOS();
 
 void InitPVS(TSemaphore S, std::string name);
 
-void P(TSemaphore S);
+void GetResource(TSemaphore S);
 
-void V(TSemaphore S);
+void ReleaseResource(TSemaphore S);
 
 #define DeclareSysEvent(ID) \
 const int Event_##ID = (ID)*(ID);
